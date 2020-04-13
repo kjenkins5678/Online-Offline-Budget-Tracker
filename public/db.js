@@ -3,7 +3,11 @@ const request = indexedDB.open("budget", 1);
 
 request.onupgradeneeded = function(event) {
   const db = event.target.result;
-  db.createObjectStore("pending", { autoIncrement: true });
+  var store = db.createObjectStore("pending", { keyPath: 'id', autoIncrement: true });
+
+  store.createIndex('name', 'name', {unique: false});
+  store.createIndex('value', 'value', {unique: false});
+  store.createIndex('date', 'date', {unique: false});
 };
 
 request.onsuccess = function(event) {
